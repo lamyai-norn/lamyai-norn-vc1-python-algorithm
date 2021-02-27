@@ -15,13 +15,13 @@ frame.master.title("hello gamer")
 # square size
 square_size=630/len(grid)
 #Function
+root.imageLuigi = tk.PhotoImage(file=r'./mario2.gif')
 def drawGrid():
     for row in range(len(grid)):
         for col in range(len(grid[0])):
             if grid[row][col]=="p":
-                # root.imageLuigi = tk.PhotoImage(file=r'./mario2.gif')
-                # player = canvas.create_image(row*square_size,col*square_size,70+square_size*row,70+square_size*col, image=root.imageLuigi, anchor='nw', tags="player")
-                player=canvas.create_rectangle(row*square_size,col*square_size,70+square_size*row,70+square_size*col,fill="black")
+                player = canvas.create_image(row*square_size,col*square_size, image=root.imageLuigi, anchor='nw', tags="player")
+                # player=canvas.create_rectangle(row*square_size,col*square_size,70+square_size*row,70+square_size*col,fill="black")
             elif grid[row][col]=="w":
                 player=canvas.create_rectangle(row*square_size,col*square_size,70+square_size*row,70+square_size*col,fill="blue")
             elif grid[row][col]=="g":
@@ -31,60 +31,54 @@ def drawGrid():
             else:
                 player=canvas.create_rectangle(row*square_size,col*square_size,70+square_size*row,70+square_size*col,fill="white")
     return None
-def moveToLeft(event):
-    global grid 
-    indexX=-1
-    indexY=-1
+
+def getPositionPlayer(grid):
     for row in range(len(grid)):
         for col in range(len(grid[0])):
             if grid[row][col]=="p":
                 indexX=row
                 indexY=col
+    return([indexX, indexY])
+
+
+def moveToLeft(event):
+    global grid 
+    indexX = getPositionPlayer(grid)[0]
+    indexY = getPositionPlayer(grid)[1]
     if  indexX>0:
-        grid[indexX][indexY]=0
-        grid[indexX-1][indexY]="p"
-    drawGrid()
+        if grid[indexX-1][indexY] == 0:
+            grid[indexX][indexY]=0
+            grid[indexX-1][indexY]="p"
+            drawGrid()
     
 def moveToRight(event):
     global grid
-    indexX=-1
-    indexY=-1
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-            if grid[row][col]=="p":
-                indexX=row
-                indexY=col
+    indexX = getPositionPlayer(grid)[0]
+    indexY = getPositionPlayer(grid)[1]
     if indexX<len(grid)-1:
-        grid[indexX][indexY]=0
-        grid[indexX+1][indexY]="p"
-    drawGrid()
+        if grid[indexX+1][indexY]==0:
+            grid[indexX][indexY]=0
+            grid[indexX+1][indexY]="p"
+            drawGrid()
 def moveToUp(event):
     global grid
-    indexX=-1
-    indexY=-1
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-           if grid[row][col]=="p":
-               indexX=row
-               indexY=col
+    indexX = getPositionPlayer(grid)[0]
+    indexY = getPositionPlayer(grid)[1]
     if  indexY>0:
-        grid[indexX][indexY]=0
-        grid[indexX][indexY-1]="p"
-    drawGrid()
+        if   grid[indexX][indexY-1]==0:
+            grid[indexX][indexY]=0
+            grid[indexX][indexY-1]="p"
+            drawGrid()
 def moveToDown(event):
     global grid
-    indexX=-1
-    indexY=-1
-    for  row in range(len(grid)):
-        for col in range(len(grid[0])):
-            if grid[row][col]=="p":
-                indexX=row
-                indexY=col
+    indexX = getPositionPlayer(grid)[0]
+    indexY = getPositionPlayer(grid)[1]
     if indexY<len(grid)-1:
-        grid[indexX][indexY]=0
-        grid[indexX][indexY+1]="p"
-    drawGrid()
-canvas=tk.Canvas(root)
+        if  grid[indexX][indexY+1]==0:
+            grid[indexX][indexY]=0
+            grid[indexX][indexY+1]="p"
+            drawGrid()
+canvas=tk.Canvas(root,)
 root.bind("<Left>",moveToLeft)#move to left
 root.bind("<Right>",moveToRight)#move to right
 root.bind("<Up>",moveToUp)#move to up

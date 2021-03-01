@@ -2,7 +2,7 @@ import tkinter as tk
 #make empty window
 root=tk.Tk()
 # put screenwidth and 
-root.geometry("750x750")
+root.geometry("640x640")
 #veriable for stalled
 # p is the player
 # w are the walls
@@ -29,7 +29,7 @@ frame=tk.Frame()
 frame.master.title("hello gamer")
 
 # square size
-square_size=750/len(grid)
+square_size=645/len(grid)
 #Function
 img = tk.PhotoImage(file="mario.png")
 img1=tk.PhotoImage(file='flagGreen_down.png')
@@ -42,19 +42,19 @@ def drawGrid():
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if grid[col][row]=="p":
-                player=canvas.create_rectangle(row*square_size,col*square_size,50+square_size*row,50+square_size*col,outline="white",fill="white")
+                player=canvas.create_rectangle(row*square_size,col*square_size,43+square_size*row,43+square_size*col,outline="white",fill="white")
                 player = canvas.create_image(row*square_size,col*square_size, image=img, anchor='nw')
             elif grid[col][row]=="w":
                 player=canvas.create_image(row*square_size,col*square_size, image=wall, anchor='nw')
             elif grid[col][row]=="g":
                 player=canvas.create_image(row*square_size,col*square_size, image=img1, anchor='nw')
             elif grid[col][row]=="e":
-                player=canvas.create_rectangle(row*square_size,col*square_size,50+square_size*row,50+square_size*col,outline="white",fill="white")
+                player=canvas.create_rectangle(row*square_size,col*square_size,43+square_size*row,43+square_size*col,outline="white",fill="white")
                 enemies = canvas.create_image(row*square_size,col*square_size, image=img3, anchor='nw')
                 print(row*square_size,col*square_size)
                 # indexEnemies=getindexenemy(enemies)
             else:
-                player=canvas.create_rectangle(row*square_size,col*square_size,50+square_size*row,50+square_size*col,outline="",fill="white")
+                player=canvas.create_rectangle(row*square_size,col*square_size,43+square_size*row,43+square_size*col,outline="",fill="white")
 # def getindexenemy(index):
     
 def getPositionPlayer(grid):
@@ -73,6 +73,10 @@ def moveToLeft(event):
             grid[indexY][indexX]=0
             grid[indexY][indexX-1]="p"
             drawGrid()
+        elif grid[indexY][indexX-1]=="e":
+            canvas.delete('all')
+            canvas.create_image(200,200, image=lost, anchor='nw')
+            canvas.create_text(310,100,text="You lost!",font=("arail",30))
 def moveToRight(event):
     global grid
     indexX = getPositionPlayer(grid)[0]
@@ -88,7 +92,6 @@ def moveToRight(event):
             canvas.create_text(310,100,text="You win!",font=("arail",30))
         elif grid[indexY][indexX+1]=="e":
             canvas.delete('all')
-
             canvas.create_image(200,200, image=lost, anchor='nw')
             canvas.create_text(310,100,text="You lost!",font=("arail",30))
 def moveToUp(event):
@@ -100,6 +103,10 @@ def moveToUp(event):
             grid[indexY][indexX]=0
             grid[indexY-1][indexX]="p"
             drawGrid()
+        elif grid[indexY-1][indexX]=="e":
+            canvas.delete('all')
+            canvas.create_image(200,200, image=lost, anchor='nw')
+            canvas.create_text(310,100,text="You lost!",font=("arail",30))
 def moveToDown(event):
     global grid
     indexX = getPositionPlayer(grid)[0]
@@ -109,6 +116,10 @@ def moveToDown(event):
             grid[indexY][indexX]=0
             grid[indexY+1][indexX]="p"
             drawGrid()
+        elif grid[indexY+1][indexX]=="e":
+            canvas.delete('all')
+            canvas.create_image(200,200, image=lost, anchor='nw')
+            canvas.create_text(310,100,text="You lost!",font=("arail",30))
 canvas=tk.Canvas(root,)
 root.bind("<Left>",moveToLeft)#move to left
 root.bind("<Right>",moveToRight)#move to right

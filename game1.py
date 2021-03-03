@@ -10,8 +10,8 @@ root.geometry("700x640")
 #g is goal for player move to reach
 #e is enemies
 #c stand for score
+
 # Play the sound
-winsound.PlaySound("funkyrobot.mp3",winsound.SND_player)
 grid = [
     [ 0 ,  0,  0 , 0 , 0 , 0 , 0 , 0,  0 , 0 , 0 , 0,  0 , 0 ,  0],
     ["p", "w", 0 , 0 ,"c","e" ,0 ,"c", 0 ,"c" ,0 ,"c", 0 ,"e" ,"c"],
@@ -81,11 +81,13 @@ def moveToLeft(event):
         elif grid[indexX][indexY-1]=="c":
             grid[indexX][indexY]=0
             grid[indexX][indexY-1]="p"
+            winsound.PlaySound("coin2.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             score += 1
             canvas.delete('all')
             drawGrid()
             borderAndScore()
         elif grid[indexX][indexY-1]=="e":
+            winsound.PlaySound("hurt.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             grid[indexX][indexY]=0
             grid[indexX][indexY-1]="p"
             life -= 1
@@ -96,6 +98,7 @@ def moveToLeft(event):
                 canvas.delete('all')
                 canvas.create_image(250,200, image=lost, anchor='nw')
                 canvas.create_text(360,100,text="You lost!",font=("arail",30))
+                winsound.PlaySound("lose4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 def moveToRight(event):
     global grid, score,life
     indexX = getPositionPlayer(grid)[0]
@@ -112,20 +115,25 @@ def moveToRight(event):
                 canvas.delete('all')
                 canvas.create_image(250,200, image=champoin, anchor='nw')
                 canvas.create_text(360,100,text="You win!",font=("arail",30))
+                winsound.PlaySound("win.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             else:
                 canvas.delete('all') 
                 canvas.create_text(360,250,text="You lost!",font=("arail",20))
                 canvas.create_text(360,300,text="Not enough score.",font=("arail",20))
+                winsound.PlaySound("lose4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
         elif grid[indexX][indexY+1]=="c":
             grid[indexX][indexY]=0
             grid[indexX][indexY+1]="p"
+            winsound.PlaySound("coin2.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             score += 1
             canvas.delete('all')
             drawGrid()
             borderAndScore()
         elif grid[indexX][indexY+1]=="e":
+            winsound.PlaySound("hurt.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             grid[indexX][indexY]=0
             grid[indexX][indexY+1]="p"
+
             life -= 1
             canvas.delete('all')
             drawGrid()
@@ -134,6 +142,7 @@ def moveToRight(event):
                 canvas.delete('all')
                 canvas.create_image(250,200, image=lost, anchor='nw')
                 canvas.create_text(360,100,text="You lost!",font=("arail",30))
+                winsound.PlaySound("lose4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 def moveToUp(event):
     global grid, score,life
     indexX = getPositionPlayer(grid)[0]
@@ -148,11 +157,13 @@ def moveToUp(event):
         elif grid[indexX-1][indexY]=="c":
             grid[indexX][indexY]=0
             grid[indexX-1][indexY]="p"
+            winsound.PlaySound("coin2.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             score += 1
             canvas.delete('all')
             drawGrid()
             borderAndScore()
         elif grid[indexX-1][indexY]=="e":
+            winsound.PlaySound("hurt.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             grid[indexX][indexY]=0
             grid[indexX-1][indexY]="p"
             life -= 1
@@ -163,6 +174,7 @@ def moveToUp(event):
                 canvas.delete('all')
                 canvas.create_image(250,200, image=lost, anchor='nw')
                 canvas.create_text(360,100,text="You lost!",font=("arail",30))
+                winsound.PlaySound("lose4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 def moveToDown(event):
     global grid, score,life
     indexX = getPositionPlayer(grid)[0]
@@ -177,11 +189,13 @@ def moveToDown(event):
         elif grid[indexX+1][indexY]=="c":
             grid[indexX][indexY]=0
             grid[indexX+1][indexY]="p"
+            winsound.PlaySound("coin2.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             score += 1
             canvas.delete('all')
             drawGrid()
             borderAndScore()
         elif grid[indexX+1][indexY]=="e":
+            winsound.PlaySound("hurt.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             grid[indexX][indexY]=0
             grid[indexX+1][indexY]="p"
             life -= 1
@@ -192,6 +206,7 @@ def moveToDown(event):
                 canvas.delete('all')
                 canvas.create_image(250,200, image=lost, anchor='nw')
                 canvas.create_text(360,100,text="You lost!",font=("arail",30))
+                winsound.PlaySound("lose4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 canvas=tk.Canvas(root)
 def borderAndScore():
     point=canvas.create_text(250,20,text=("score : "+str(score)),font=("Comic Sans",15),fill='blue')
